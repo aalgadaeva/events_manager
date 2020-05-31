@@ -1,26 +1,26 @@
 <div class="event media">
-  <h3>{{event.message_html|safe}}</h3>
-  <div class="media-body">
-    <strong>{{event.user.username}}</strong>
-    <h5 class="media-heading">
-    <span class="username">
-      <a href="{% url 'events:for_user' username=event.user.username%}"></a>
-    </span>
-    <time class="time">
-      <a href="{% url 'events:single' username=event.user.username pk=event.pk %}"></a>
-    </time>
-    </h5>
-
-    <div class="media-footer">
-      {% if user.is_authenticated and event.user == user %}
-      <a href="{% url 'events:delete' pk=event.pk %}" title="delete" class="btn btn-simple">
-        <i class="fas fa-minus-circle" aria-hidden="true"></i>
-        <span class="text-danger icon-label">Delete</span>
-
-      </a>
-      {% endif %}
+    <h3>{{event.message_html|safe}}</h3>
+    <div class="media-body">
+      <strong>{{event.user.username}}</strong>
+      <h5 class="media-heading">
+      <span class="username">
+        <a href="{% url 'events:for_user' username=event.user.username%}"></a>
+      </span>
+      <time class="time">
+        <a href="{% url 'events:event-detail' username=event.user.username pk=event.pk %}"></a>
+      </time>
+      </h5>
+  
+      <div class="media-footer">
+        {% if user.is_authenticated and event.user == user %}
+        <a href="{% url 'events:delete' pk=event.pk %}" title="delete" class="btn btn-simple">
+          <i class="fas fa-minus-circle" aria-hidden="true"></i>
+          <span class="text-danger icon-label">Delete</span>
+  
+        </a>
+        {% endif %}
+      </div>
+  
     </div>
-
+  
   </div>
-
-</div>

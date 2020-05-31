@@ -1,5 +1,6 @@
 Django
 Pillow
 django-bootstrap4
-django-braces
-django-misaka
+django-tinymce
+django-crispy-forms
+cloudinary

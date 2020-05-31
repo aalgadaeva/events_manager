@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.contrib import messages
-# Create your views here.
 
 from django.contrib.auth.mixins import (LoginRequiredMixin,
 PermissionRequiredMixin)
@@ -17,10 +16,19 @@ class CreateGroup(LoginRequiredMixin, generic.CreateView):
     fields = ('category', 'name', 'description')
     model = Group
 
-class SingleGroup(generic.DetailView):
+class ListGroups(LoginRequiredMixin, generic.ListView):
     model = Group
+    template_name = 'groups/group_list.html'
+    context_object_name = 'groups'
+    paginate_by = 10
 
-class ListGroups(generic.ListView):
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Group.objects.all()
+        else:
+            return Group.objects.all()
+
+class SingleGroup(generic.DetailView):
     model = Group
 
 class JoinGroup(LoginRequiredMixin, generic.RedirectView):
