@@ -30,6 +30,7 @@ class ListGroups(LoginRequiredMixin, generic.ListView):
 
 class SingleGroup(generic.DetailView):
     model = Group
+    
 
 class JoinGroup(LoginRequiredMixin, generic.RedirectView):
 
