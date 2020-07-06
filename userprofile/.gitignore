@@ -1,0 +1,28 @@
+
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+
+
+# pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+
+

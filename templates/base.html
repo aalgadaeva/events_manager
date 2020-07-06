@@ -1,58 +1,55 @@
-<!DOCTYPE html>
+
 {% load static %}
-{% load events_tags %}
-{% load crispy_forms_tags %}
-{% load crispy_forms_filters %}
 
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-
-    <title> Find Your Events </title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="./src/css/bootstrap-reboot.min.css">
+        <link rel="stylesheet" href="./src/css/bootstrap-grid.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <title>Document</title>
+    </head>
+    
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-info sticky-top">
-        <a class="navbar-brand" href="http://127.0.0.1:8000/"><h1> Bishmeet </h1></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <h3 class="logo_text"><a href="{% url 'home' %}"> BishMeet </a></h3>
             
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-item nav-link" href="{% url 'groups:create' %}">Create Group</a>
-                </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'events:event-create' %}">Create a new Event</a>
+                <li class="nav-item active">
+                    <a class="nav-item nav-link" href="{% url 'groups:all' %}"> Группы </a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-item nav-link" href="{% url 'groups:all' %}"> Groups </a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-item nav-link" href="{% url 'events:event-list' %}">Events</a>
+                    <a class="nav-item nav-link" href="{% url 'events:event-list' %}"> Календарь </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'actions:notification_list' %}">Notifications</a>
+                    <a class="nav-link" href="{% url 'actions:notification_list' %}"> Уведомления </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'userprofile:edit' %}"> Профиль </a>
                 </li>
 
             </ul>
             
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-item nav-link" href="{% url 'accounts:logout' %}">Log Out</a>
-                </li>
-            </ul>
-
-            <a class="nav-item nav-link" href="{% url 'accounts:login' %}">Log in</a>
-            <a class="nav-item nav-link" href="{% url 'accounts:signup' %}">Sign Up</a>
+            <div class="col-3 .p-r-20 text-right">
+               
+                {% if user.is_authenticated %}
+                    Hi, {{ user.username }}
+                    <p><a href="{% url 'logout' %}"> Выйти </a></p>
+                {% else %}
+                    <p>You are not logged in</p>
+                    <a class="menu_items_text"><a href="{% url 'login' %}"> Войти </a>
+                    <a class="menu_items_text"><a href="{% url 'accounts:signup' %}"> Зарегистрироваться </a>
+                    
+                {% endif %}
+                
+            </div>
             
-
-        </div>
     </nav>
 
 

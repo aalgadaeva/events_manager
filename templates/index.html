@@ -1,257 +1,579 @@
 {% load static %}
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-    <title>Hello, world!</title>
-  </head>
-  <body>
-    <div class="container-fluid hidden-nav">
-        <div class="row">
-            <div class="col-12">
-                <p class="d-flex justify-content-between">
-                    <img class="close-img close" src="{% static 'images/close.png' %}" alt="close.png" height="24" width="24">
-                    <span class="languages">
-                        <span class="language-ru">РУС</span>
-                        <span class="language-kg">КЫРГ</span>
-                        <span class="language-en">ENG</span>
-                    </span>
-                </p>
-                <p>
-                    <input type="text" name="search-input" class="search-input" placeholder="Поиск">
-                    <img class="search-icon" src="{% static 'images/search.png' %}" width="24" height="24"/>
-                </p>
-                
-                    <p class="hidden-nav-text"><a href="{% url 'login' %}">Войти</a></p>
-                    <p class="hidden-nav-text"><a href="{% url 'accounts:signup' %}">Зарегистрироваться</a></p>
-                    <hr class="hidden-nav-hr">
-                    <p class="hidden-nav-text">Создать группу</p>
-                    <p class="hidden-nav-text">Войти в группу</p>
-                
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid">
-        <div class="row nav">
-            <div class="col-3 .p-l-20">
-                <img class="vertical-align hamburger" src="{% static 'images/menu.png' %}" alt="menu.png" height="24" width="24">
-            </div>
-            <div class="col-6 text-center">
-                <p class="logo-title vertical-align">BishMeet</p>
-            </div>
-            <div class="col-3 .p-r-20 text-right">
-                {% block content %}
-                {% if user.is_authenticated %}
-                    Hi {{ user.username }}!
-                    <p><a href="{% url 'logout' %}">Log Out</a></p>
-                {% else %}
-                    <p>You are not logged in</p>
-                    <p class="vertical-align"><a href="{% url 'login' %}">Войти</a></p>
-                {% endif %}
-                {% endblock content %}
-            </div>
-        </div>
-    </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 
-    <div class="container-fluid hero">
-        <div class="row">
-            <div class="col-12 text-center">
-                <p class="main-title">Вступайте в группы</p>
-                <p class="main-description">Чтобы знакомиться с людьми, пробовать новое и заниматься тем, что вы любите.</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 p-l-20 p-r-20">
-                <a href="{% url 'groups:all' %}"><button class="main-block-button">Вступить в группу</button></a>
-            </div>
-            <div class="col-12 p-l-20 p-r-20">
-                <a href="{% url 'groups:create' %}"><button class="main-block-button main-block-button-reverse">Создать группу</button></a>
-            </div>
-        </div>
-    </div>
+    <link rel="stylesheet" href="./src/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="./src/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="./src/css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="./src/css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'src/css/style.css' %}">
+    <title>Bishmeet</title>
+</head>
 
-    <div class="container-fluid p-0">
-        <div class="row work-description p-l-20 p-r-20 m-r-0    ">
-            <div class="col-12">
-                <p class="basic-title">Как работает Bishmeet</p>
-            </div>
-            <div class="col-12 m-t-30">
-                <p class="basic-subtitle">Находите группы</p>
-                <p class="basic-description">Узнайте, кто проводит мероприятия, посвященные вашим любимым темам.</p>
-                <p><a class="link-text" href="{% url 'groups:all' %}">Присоединиться -></a></p>
-            </div>
-            <div class="col-12 m-t-30">
-                <p class="basic-subtitle">Создайте группу</p>
-                <p class="basic-description">Создав собственную группу, вы сможете приглашать людей из многомиллионного сообщества.</p>
-                <p><a class="link-text" href="{% url 'groups:create' %}">Присоединиться -></a></p>
-            </div>
-        </div>
-    </div>
+<body>
 
-    <div class="container-fluid">
-        <div class="row events">
-            <div class="col-7 p-l-20 p-t-20 p-b-20">
-                <p class="basic-subtitle text-black p-b-0">Мероприятия</p>
-            </div>
-            <div class="col-5 p-r-20 p-t-24 p-b-20 text-right">
-                <p><a class="link-text" href="{% url 'events:event-list' %}">Показать все</a></p>
-            </div>
-        </div>
-        <div class="row event-slider-block">
-        	<div class="col-8 event-block">
-        		<p class="basic-description"><span class="date-text">12.04.2020</span><span class="time-text">8:00</span></p>
-        		<p class="event-block-title">Home Run 2020</p>
-        		<p class="event-block-description">Домашний забег</p>
-        		<p class="basic-description">15 участников <button type="button" class="event-button">Посетить</button></p>
-        	</div>
-            <div class="col-8 event-block">
-                <p class="basic-description"><span class="date-text">12.04.2020</span><span class="time-text">8:00</span></p>
-                <p class="event-block-title">Home Run 2020</p>
-                <p class="event-block-description">Домашний забег</p>
-                <p class="basic-description">15 участников <button type="button" class="event-button">Посетить</button></p>
-            </div>
-        </div>
-    </div>
+    <!-- modal window -->
+    <div class="modal_gamburger">
+        <div class="container">
+            <div class="box_all">
+                <div class="box_modal">
 
-    <div class="container-fluid">
-        <div class="row groups">
-            <div class="col-7 p-l-20 p-t-20 p-b-20">
-                <p class="basic-subtitle text-black p-b-0">Группы</p>
-            </div>
-            <div class="col-5 p-r-20 p-t-24 p-b-20 text-right">
-                <p><a class="link-text" href="{% url 'groups:all' %}">Показать все</a></p>
-            </div>
-        </div>
-        <div class="row group-slider-block">
-        	<div class="col-8 group-block">
-                <div class="group-header text-center">
-                    <img class="vertical-align group-logo" src="{% static 'images/gdg.png' %}" alt="gdg"/>
+                    <p> <span data-cloze class="close">&times;</span></p>
+
+
+                    <div class="box_lang">
+                        <span class="lang_items">РУС</span>
+                        <span class="lang_items">КЫРГ</span>
+                        <span class="lang_items">ENG</span>
+                    </div>
                 </div>
-                <div class="group-body">
-                    <p class="basic-description">IT</p>
-                    <p class="group-name">GDG Bishkek</p>
-                    <p class="group-block-description">Предстоящих мероприятий: 1</p>
-                    <p class="group-block-number">821 участников</p>
+
+                <div class="input-group mt-3 mb-4">
+                    <input type="text" class="form-control" placeholder="поиск" aria-label="Username"
+                        aria-describedby="basic-addon1">
+                    <img class="modal_lupa" src="{% static 'src/icons/lupa.png' %}" alt="">
                 </div>
-        	</div>
-            <div class="col-8 group-block">
-                <div class="group-header text-center">
-                    <img class="vertical-align group-logo" src="{% static 'images/gdg.png' %}" alt="gdg"/>
-                </div>
-                <div class="group-body">
-                    <p class="basic-description">IT</p>
-                    <p class="group-name">GDG Bishkek</p>
-                    <p class="group-block-description">Предстоящих мероприятий: 1</p>
-                    <p class="group-block-number">821 участников</p>
+
+                <h6 class="list_items"><a href="{% url 'login' %}"> Войти</a></h6>
+                <h6 class="list_items"><a href="{% url 'accounts:signup' %}"> Зарегистрироваться</a></h6>
+                <hr class="line_category mt-3 mb-3">
+                <h6 class="list_items"><a href="#">Создать группу</a></h6>
+                <h6 class="list_items"><a href="#">Войти в группу</a></h6>
+            </div>
+        </div>
+    </div>
+
+    <!-- header for mobile -->
+    <div class="mobile">
+        <div class="container_all">
+            <div class="gamburger_menu_mobile">
+
+                <img data-mobile class="gamburger_img " src="static/src/icons/gamburger_menu.png" alt="menu">
+                <h2 class="logo_text_mobile "><a href="{% url 'home' %}">BishMeet</a></h2>
+                <span class="menu_text_mobile "><a href="{% url 'login' %}">Войти</a></span>
+            </div>
+        </div>
+    </div>
+
+
+    <header class="header_menu">
+        <div class="container_all">
+
+            <div class="menu">
+                <h2 class="logo_text"><a href="{% url 'home' %}">BishMeet</a></h2>
+                <div class="box_menu">
+                    <ul class="menu_items menu_2">
+                        <li class="menu_items_text"><a href="{% url 'groups:create' %}">Создать группу</a></li>
+                        <li class="menu_items_text"><a href="{% url 'groups:all' %}">Войти в группы</a></li>
+                        <li class="menu_items_text">
+                            <select class="dropDown">
+                                <option>Рус</option>
+                                <option>Кыр</option>
+                                <option>Eng</option>
+
+                            </select>
+                        </li>
+                    </ul>
+
+                    <div class="col-3 .p-r-20 text-right">
+                        {% block content %}
+                        {% if user.is_authenticated %}
+                            Hi, {{ user.username }}
+                            <p><a href="{% url 'logout' %}"> Выйти </a></p>
+                        {% else %}
+                            <p>You are not logged in</p>
+                            <ul class="menu_items ">
+                                <li class="menu_items_text"><a href="{% url 'login' %}"> Войти </a></li>
+                                <li class="menu_items_text"><a href="{% url 'accounts:signup' %}"> Зарегистрироваться </a></li>
+                            </ul>
+                        {% endif %}
+                        {% endblock content %}
+                    </div>
+                    
                 </div>
             </div>
         </div>
-    </div>
+
+    </header>
+
+    <section class="promo">
+        <div class="container_all">
+            <div class="box_promo ">
+                <h1 class="promo_first_text ">Вступайте в группы </h1>
+                <p class="promo_text_item">Чтобы знакомиться с людьми, пробовать новое и заниматься тем, <br
+                        class="break">что вы
+                    любите.</p>
+                <div class="for_btn">
+                    <button type="button" class="btn btn-outline-primary">Вступить в группу </button>
+                    <button type="button" class="btn btn-outline-primary">Создать группу</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="promo_info">
+        <div class="container-fluid">
+            <div class="box_promo_info ">
+                <h2 class="promo_second_text ">Как работает Bishmeet</h2>
+                <div class="promo_info_box mt-4">
+                    <div class="box_info_1">
+
+                        <div class="box_img">
+                            <img class="promo_img_lupa mt-2" src="static/src/icons/lupa_blue_2.png" alt="lupa">
+                        </div>
+
+                        <div class="box_text">
+                            <h2 class="promo_find_text">Находите группы</h2>
+                            <p class="promo_text_info">Узнайте, кто проводит мероприятия, посвященные вашим любимым
+                                <br> темам.
+                            </p>
+                        </div>
+
+                        <div class="box_com">
+                            <a href="#"><img class="get_in" src="static/src/icons/str.png" alt="str"> </a>
+                        </div>
+
+                    </div>
 
 
-    <div class="container-fluid">
-        <div class="row categories">
-            <div class="col-12 p-l-20 p-t-20 p-b-20">
-                <p class="basic-subtitle text-black p-b-0">Категории</p>
+
+
+                    <div class="box_info_2">
+
+                        <div class="box_img">
+                            <img class="promo_img_pluse mt-2  " src="static/src/icons/pluse (1).png" alt="plus">
+                        </div>
+
+                        <div class="box_text_2">
+                            <h2 class="promo_find_text">Создавайте группы </h2>
+                            <p class="promo_text_info">Создав собственную группу, вы сможете приглашать людей из<br>
+                                многомиллионного сообщества.
+                            </p>
+                        </div>
+
+                        <div class="box_com">
+                            <a href="#"><img class="get_in mr-4" src="static/src/icons/str.png" alt="str"> </a>
+                        </div>
+
+                    </div>
+
+
+                </div>
             </div>
         </div>
-        <div class="row category-box">
-            <a href="#" class="category-link"><span class="category-span">Активный отдых</span></a>
-            <a href="#" class="category-link"><span class="category-span">Технологии</span></a>
-            <a href="#" class="category-link"><span class="category-span">Семья</span></a>
-            <a href="#" class="category-link"><span class="category-span">Здоровье</span></a>
-            <a href="#" class="category-link"><span class="category-span">Спорт</span></a>
-            <a href="#" class="category-link"><span class="category-span">Обучение</span></a>
-            <a href="#" class="category-link"><span class="category-span">Еда</span></a>
-            <a href="#" class="category-link"><span class="category-span">Фотографии</span></a>
-            <a href="#" class="category-link"><span class="category-span">Музыка</span></a>
-            <a href="#" class="category-link"><span class="category-span">Фильмы</span></a>
-            <a href="#" class="category-link"><span class="category-span">Игры</span></a>
-            <a href="#" class="category-link"><span class="category-span">Искусство</span></a>
-            <a href="#" class="category-link"><span class="category-span">Бизнес</span></a>
-            <a href="#" class="category-link"><span class="category-span">Книги</span></a>
-            <a href="#" class="category-link"><span class="category-span">Движение</span></a>
-            <a href="#" class="category-link"><span class="category-span">Язык и культура</span></a>
-            <a href="#" class="category-link"><span class="category-span">Вера</span></a>
-            <a href="#" class="category-link"><span class="category-span">Танцы</span></a>
-            <a href="#" class="category-link"><span class="category-span">Животные</span></a>
-            <a href="#" class="category-link"><span class="category-span">Хобби</span></a>
-            <a href="#" class="category-link"><span class="category-span">Мода</span></a>
-            <a href="#" class="category-link"><span class="category-span">Карьера</span></a>
-        </div>
-    </div>
+    </section>
 
-    <div class="container-fluid footer">
-        <div class="row">
-            <div class="col-12 p-l-20 p-t-20 p-b-20">
-                <p class="footer-title">BishMeet</p>
-                <p class="footer-description">Bishmeet — это платформа, где пользователи могут находить группы по интересам. Или же создавать самим новые группы.</p>
-                <p class="social-media-links">
-                    <img class="social-img" src="{% static 'images/insta.png' %}" alt="instagram" height="24" width="24">
-                    <img class="social-img" src="{% static 'images/fb.png' %}" alt="facebook" height="24" width="24">
-                    <img class="social-img" src="{% static 'images/telegram.png' %}" alt="telegram" height="24" width="24">
-                </p>
-                <p class="footer-text">Найти группу</p>
-                <p class="footer-text">Создать группу</p>
-                <hr class="footer-hr">
-                <p class="footer-text">Зарегистрироваться</p>
-                <p class="footer-text">Войти</p>
-                <p class="footer-text">Помощь</p>
-                <hr class="footer-hr">
-                <p class="footer-text">Группы</p>
-                <p class="footer-text">Мероприятия</p>
-                <p class="footer-text">Категории</p>
-                <p class="footer-text">Города</p>
-                <p class="footer-text">О нас</p>
+    <section class="promo_slider">
+        <div class="container_all">
+            <div class="promo_text_slider">
+                <h2 class="activity ">Мероприятия</h2>
+                <p class="activity_text"><a href="#">Показать все </a></p>
+            </div>
+
+            <!-- <div class="container"> -->
+            <div class="first owl-carousel owl-theme owl-loaded">
+                <div>
+                    <div class="card ">
+                        <div class="card-body">
+                            <h5 class="card-title">12.04.2020</h5>
+                            <h5 class="card-title">8:00</h5>
+                            <h4 class="card-title">Home Run 2020</h4>
+
+                            <p class="card-text">Домашний забег</p>
+                            <p class="card-title-text">15 участников</p>
+
+                            <a href="#" class="btn_card btn btn-primary">Посетить</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="card ">
+                        <div class="card-body">
+                            <h5 class="card-title">12.04.2020</h5>
+                            <h5 class="card-title">8:00</h5>
+                            <h4 class="card-title">Home Run 2020</h4>
+
+                            <p class="card-text">Домашний забег</p>
+                            <p class="card-title-text">15 участников</p>
+
+                            <a href="#" class="btn_card btn btn-primary">Посетить</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="card ">
+                        <div class="card-body">
+                            <h5 class="card-title">12.04.2020</h5>
+                            <h5 class="card-title">8:00</h5>
+                            <h4 class="card-title">Home Run 2020</h4>
+
+                            <p class="card-text">Домашний забег</p>
+                            <p class="card-title-text">15 участников</p>
+
+                            <a href="#" class="btn_card btn btn-primary">Посетить</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="card ">
+                        <div class="card-body">
+                            <h5 class="card-title">12.04.2020</h5>
+                            <h5 class="card-title">8:00</h5>
+                            <h4 class="card-title">Home Run 2020</h4>
+
+                            <p class="card-text">Домашний забег</p>
+                            <p class="card-title-text">15 участников</p>
+
+                            <a href="#" class="btn_card btn btn-primary">Посетить</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="card ">
+                        <div class="card-body">
+                            <h5 class="card-title">12.04.2020</h5>
+                            <h5 class="card-title">8:00</h5>
+                            <h4 class="card-title">Home Run 2020</h4>
+
+                            <p class="card-text">Домашний забег</p>
+                            <p class="card-title-text">15 участников</p>
+
+                            <a href="#" class="btn_card btn btn-primary">Посетить</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="card ">
+                        <div class="card-body">
+                            <h5 class="card-title">12.04.2020</h5>
+                            <h5 class="card-title">8:00</h5>
+                            <h4 class="card-title">Home Run 2020</h4>
+
+                            <p class="card-text">Домашний забег</p>
+                            <p class="card-title-text">15 участников</p>
+
+                            <a href="#" class="btn_card btn btn-primary">Посетить</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="card ">
+                        <div class="card-body">
+                            <h5 class="card-title">12.04.2020</h5>
+                            <h5 class="card-title">8:00</h5>
+                            <h4 class="card-title">Home Run 2020</h4>
+
+                            <p class="card-text">Домашний забег</p>
+                            <p class="card-title-text">15 участников</p>
+
+                            <a href="#" class="btn_card btn btn-primary">Посетить</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="container-fluid copywrite">
-        <div class="row">
-            <div class="col-12">
-                <p>© 2020 BishMeet</p>
+
+        </div>
+    </section>
+
+
+
+    <section class="promo_slider">
+        <div class="container_all">
+            <div class="promo_text_slider">
+                <h2 class="activity ">Группы</h2>
+                <p class="activity_text"><a href="#">Показать все </a></p>
+            </div>
+
+            <div class="second owl-carousel owl-theme owl-loaded">
+                <div>
+                    <div class="second_card">
+                        <div class="card_GDG_img">
+                            <img class="GDG_img" src="static/src/images/GDG.png" alt="GDG">
+                        </div>
+                        <div class="info_text">
+                            <h5 class="card-title-text GDG_text">IT</h5>
+                            <h4 class=""><a class="GDG_text" href="#">GDG Bishkek</a></h4>
+                            <p class="card-text"><a class="GDG_text" href="#">Предстоящих мероприятий:
+                                    1</a></p>
+                            <p class="card_text"><a class="GDG_text" href="#"> 821 участников</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="second_card">
+                        <div class="card_GDG_img">
+                            <img class="GDG_img" src="static/src/images/GDG.png" alt="GDG">
+                        </div>
+                        <div class="info_text">
+                            <h5 class="card-title-text GDG_text">IT</h5>
+                            <h4 class=""><a class="GDG_text" href="#">GDG Bishkek</a></h4>
+                            <p class="card-text"><a class="GDG_text" href="#">Предстоящих мероприятий:
+                                    1</a></p>
+                            <p class="card_text"><a class="GDG_text" href="#"> 821 участников</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="second_card">
+                        <div class="card_GDG_img">
+                            <img class="GDG_img" src="static/src/images/GDG.png" alt="GDG">
+                        </div>
+                        <div class="info_text">
+                            <h5 class="card-title-text GDG_text">IT</h5>
+                            <h4 class=""><a class="GDG_text" href="#">GDG Bishkek</a></h4>
+                            <p class="card-text"><a class="GDG_text" href="#">Предстоящих мероприятий:
+                                    1</a></p>
+                            <p class="card_text"><a class="GDG_text" href="#"> 821 участников</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="second_card">
+                        <div class="card_GDG_img">
+                            <img class="GDG_img" src="static/src/images/GDG.png" alt="GDG">
+                        </div>
+                        <div class="info_text">
+                            <h5 class="card-title-text GDG_text">IT</h5>
+                            <h4 class=""><a class="GDG_text" href="#">GDG Bishkek</a></h4>
+                            <p class="card-text"><a class="GDG_text" href="#">Предстоящих мероприятий:
+                                    1</a></p>
+                            <p class="card_text"><a class="GDG_text" href="#"> 821 участников</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="second_card">
+                        <div class="card_GDG_img">
+                            <img class="GDG_img" src="static/src/images/GDG.png" alt="GDG">
+                        </div>
+                        <div class="info_text">
+                            <h5 class="card-title-text GDG_text">IT</h5>
+                            <h4 class=""><a class="GDG_text" href="#">GDG Bishkek</a></h4>
+                            <p class="card-text"><a class="GDG_text" href="#">Предстоящих мероприятий:
+                                    1</a></p>
+                            <p class="card_text"><a class="GDG_text" href="#"> 821 участников</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="second_card">
+                        <div class="card_GDG_img">
+                            <img class="GDG_img" src="static/src/images/GDG.png" alt="GDG">
+                        </div>
+                        <div class="info_text">
+                            <h5 class="card-title-text GDG_text">IT</h5>
+                            <h4 class=""><a class="GDG_text" href="#">GDG Bishkek</a></h4>
+                            <p class="card-text"><a class="GDG_text" href="#">Предстоящих мероприятий:
+                                    1</a></p>
+                            <p class="card_text"><a class="GDG_text" href="#"> 821 участников</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="second_card">
+                        <div class="card_GDG_img">
+                            <img class="GDG_img" src="static/src/images/GDG.png" alt="GDG">
+                        </div>
+                        <div class="info_text">
+                            <h5 class="card-title-text GDG_text">IT</h5>
+                            <h4 class=""><a class="GDG_text" href="#">GDG Bishkek</a></h4>
+                            <p class="card-text"><a class="GDG_text" href="#">Предстоящих мероприятий:
+                                    1</a></p>
+                            <p class="card_text"><a class="GDG_text" href="#"> 821 участников</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </section>
+
+    <section class="category">
+        <div class="container_all">
+            <h2 class="">Категории</h2>
+            <div class="category_items">
+                <ul class="items_btn">
+                    <li> <button class="category_btn">Активный отдых</button></li>
+                    <li><button class="category_btn">Технологии</button></li>
+                    <li>
+                        <button class="category_btn">Семья</button>
+
+                    </li>
+                    <li>
+                        <button class="category_btn"> Здоровье</button>
+
+                    </li>
+                    <li>
+                        <button class="category_btn"> Спорт</button>
+
+                    </li>
+                    <li>
+                        <button class="category_btn"> Обучение</button>
+
+                    </li>
+                    <li>
+                        <button class="category_btn"> Еда</button>
+
+                    </li>
+                    <li>
+                        <button class="category_btn"> Фотографии</button>
+
+                    </li>
+                    <li>
+                        <button class="category_btn"> Музыка</button>
+
+                    </li>
+                    <li>
+                        <button class="category_btn"> Фильмы</button>
+
+                    </li>
+                    <li>
+                        <button class="category_btn"> Игры</button>
+
+                    </li>
+                    <li>
+                        <button class="category_btn"> Искусство</button>
+
+                    </li>
+                    <li>
+                        <button class="category_btn"> Бизнес</button>
+
+                    </li>
+                    <li>
+                        <button class="category_btn">Книги</button>
+
+                    </li>
+                    <li>
+                        <button class="category_btn"> Карьера</button>
+
+                    </li>
+
+                    <li>
+                        <button class="category_btn">Движение</button>
+
+                    </li>
+                    <li>
+                        <button class="category_btn">Язык и культура</button>
+
+                    </li>
+                    <li>
+                        <button class="category_btn">Вера</button>
+
+                    </li>
+                    <li>
+                        <button class="category_btn">Танцы</button>
+
+                    </li>
+                    <li>
+                        <button class="category_btn">Животные</button>
+
+                    </li>
+                    <li>
+                        <button class="category_btn">Хобби</button>
+
+                    </li>
+                    <li>
+                        <button class="category_btn">Мода</button>
+
+                    </li>
+
+                </ul>
+
+
+
+
+
             </div>
         </div>
-    </div>
-    
+    </section>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script type="text/javascript">
-        $('.event-slider-block').slick({
-            arrows: false,
-        });
+    <h3 class='alert alert-success'> Находи интересующие тебя мероприятия сейчас </h3>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <p>
+            <h3>{{ form.as_p }}</h3>
+            </p>
+            <br>
+            <input type="submit" class='btn btn-primary btn-lg' value="Подписаться"/>
+        </div>
+    </form>
 
-        $('.group-slider-block').slick({
-            arrows: false,
-        });
+    <footer>
+        <div class="container_all">
+            <div class="footer_items_box">
+                <div class="footer_items_promo">
+                    <h2 class="footer_logo"> <a href="#">BishMeet</a></h2>
+                    <p class="footer_text_promo">Bishmeet — это платформа, где пользователи могут находить
+                        группы по интересам. Или же
+                        создавать самим новые группы.</p>
+                    <a href="#">
+                        <img class="soc_set" src="static/src/icons/instagram (1).png" alt="instagram">
+                    </a>
+                    <a href="#">
+                        <img class="soc_set" src="static/src/icons/facebook.png" alt="facebook">
+                    </a>
+                    <a href="#">
+                        <img class="soc_set" src="static/src/icons/telegram.png" alt="telegram">
+                    </a>
 
-        $( document ).ready(function() {
-            $( ".hidden-nav" ).hide();
-            $( ".hamburger" ).click(function() {
-                $( ".hidden-nav" ).slideToggle( "slow", function() {})});
+                </div>
 
-            $( ".close" ).click(function() {
-                $( ".hidden-nav" ).slideToggle( "slow", function() {
-            });
-            });
 
-        });
-    </script>
-  </body>
+                <div class="footer_search_text">
+                    <p><a href="#">Найти группы</a></p>
+                    <p><a href="#">Создать группу</a></p>
+
+                </div>
+
+                <div class="footer_register_text">
+                    <p><a href="sign_up.html">Зарегистрироваться</a></p>
+                    <p><a href="come_in.html">Войти </a></p>
+                    <p><a href="#">Помощь </a></p>
+
+
+                </div>
+
+                <div class="footer_category_text">
+                    <p><a href="#">Группы</a></p>
+                    <p><a href="#">Мероприятия </a></p>
+                    <p><a href="#">Категории</a></p>
+                    <p><a href="#">Города</a></p>
+                    <p><a href="#">О нас</a></p>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <div class="footer_mobile">
+            <p class="BishMeet"> © 2020 BishMeet</p>
+        </div>
+
+
+
+    </footer>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="./js/owl.carousel.min.js"></script>
+    <script src="./js/index.js"></script>
+</body>
+
 </html>

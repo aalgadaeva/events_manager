@@ -4,3 +4,4 @@ django-bootstrap4
 django-tinymce
 django-crispy-forms
 cloudinary
+djangorestframework

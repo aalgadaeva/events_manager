@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     
     'crispy_forms',
     'tinymce',
@@ -47,6 +48,8 @@ INSTALLED_APPS = [
     'groups',
     'events',
     'actions',
+    'userprofile',
+    'comments',
 ]
 
 MIDDLEWARE = [
@@ -130,5 +133,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-LOGIN_REDIRECT_URL = 'test'
-LOGOUT_REDIRECT_URL = 'thanks'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'bishmeetups@gmail.com'
+EMAIL_HOST_PASSWORD = 'bwwepcjwdkxzoubx'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False

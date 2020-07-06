@@ -1,5 +1,6 @@
 from django import forms
 from tinymce import TinyMCE
+from tinymce.models import HTMLField
 from .models import Event
 
 
